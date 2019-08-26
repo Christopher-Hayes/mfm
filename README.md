@@ -79,28 +79,36 @@ Combination of Modified FracMAP (MFM), ADDA, LibIGL, and some Python code
 
 ## NanoGUI
 
-### Run nanogui dialog
+### Edit+Make nanogui dialog
 
-    cd ./nanogui/build/
+    cd mfm/code/nanogui/build/
+    vim ../src/example1.cpp
     make example1
+
+### Run nanogui dialog (MFM GUI)
+    cd mfm/code/nanogui/build/
     ./example1
+    
+or
+
+    cd mfm
+    ./run_mfm_gui
 
 
-### Edit/Make LibIGL
+### Edit+Make LibIGL
 
     cd code/libigl/build/tutorial/102_DrawMesh
     vim ../../../tutorial/102_DrawMesh/main.cpp
     make
 
 
-## MFM-2-ADDA
+### Run MFM-2-ADDA
 
-    python3 batchGenDipoles.py input/xyz_run_1.txt
-    python3 batchGenDipoles.py ../fracmap/fractal/run_output/run_<DATETIME_HERE>/xyz_run_1.txt
-
+    cd mfm
+    python3 code/mfm_2_adda/batchGenDipoles.py ./run_output/run_<DATETIME_HERE>/xyz_run_1.txt
     cat output/outputExcelParsed.txt
 
 
-## MFM
+### MFM
 
     ./fracmap
