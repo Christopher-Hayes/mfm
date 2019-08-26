@@ -9,7 +9,7 @@ from genDipoles import buildSphere
 from numpy import *
 
 # Init formatted output file
-file_output = open('./output/outputExcelParsed.txt', 'w')
+file_output = open('outputExcelParsed.txt', 'w')
 
 # Execute command and yield output as it is received
 def execute(cmd):
@@ -32,12 +32,7 @@ def write_dipoles(dipoles, filename, new_file=True):
     f.close()
 
 # Run ADDA and grab output as it runs
-def adda_run(monomers, grid='30', dplSize='10', filename='./output/runs/outputDipoleXYZ.txt', overlap='0.5'):
-    """shift = round(float(grid) - float(overlap) * float(grid))
-    new_overlap = float(grid) - float(shift) / float(grid)
-    print('OVERLAP OF ' + overlap + ' ROUNDED TO ' + str(new_overlap))
-    print('SHIFT ' + str(shift))"""
-
+def adda_run(monomers, grid='30', dplSize='10', filename='./output/runs/outputDipoleXYZ.txt'):
     dipoles = []
     for m in monomers:
         print('monomer: {}'.format(m))
@@ -96,13 +91,11 @@ def readExcelInput(filename='./input/inputExcelRuns.txt'):
     text = text.split()
     dplSize = []
     grid = []
-    overlap = []
-    for number in range(3,len(text),3):
+    for number in range(2,len(text),2):
         dplSize.append(text[number])
         grid.append(text[number+1])
-        overlap.append(text[number+2])
 
-    return dplSize, grid, overlap
+    return dplSize, grid
 
 # Parse FracMAP output
 def operate_shift(monomers, radius):
@@ -154,9 +147,9 @@ def read_fracmap(filename):
 # program start
 def main():
     # Read input parameters
-    dplSize, grid, overlap = readExcelInput()
+    dplSize, grid = readExcelInput()
 
-    print('dplSize: {}\ngrid: {}\noverlap: {}'.format(dplSize, grid, overlap))
+    print('dplSize: {}\ngrid: {}'.format(dplSize, grid))
 
     # Read FracMAP input
     monomers = []
@@ -172,8 +165,7 @@ def main():
         adda_run(monomers,
                 grid[k],
                 dplSize[k],
-                './output/runs/dipole_output_grid' + str(grid[k]) + '_dplsize' + str(dplSize[k]) + '.txt',
-                overlap[k])
+                './output/runs/dipole_output_grid' + str(grid[k]) + '_dplsize' + str(dplSize[k]) + '.txt')
 
 
 main()

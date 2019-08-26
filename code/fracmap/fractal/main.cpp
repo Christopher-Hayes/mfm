@@ -291,14 +291,14 @@ main(int argc, char **argv) {
       FATAL << "Invalid number of runs. Must be greater than 0.";
     // TODO: ofstream safety
     // Create run_output directory (if applicable)
-    if (!boost::filesystem::exists("./run_output"))
-        boost::filesystem::create_directory("./run_output");
+    if (!boost::filesystem::exists("./output"))
+        boost::filesystem::create_directory("./output");
     // Create batch directory; TODO: naming conflicts
     // TODO: Figure out a way to move logging into this directory (would be logical)
     string batch_dir = "";
     if (p.check_run_output()) {
       // TODO: interface path operations through boost filestream library
-      batch_dir = string("./run_output/run_") + p.get_run_output();
+      batch_dir = string("./output/run_") + p.get_run_output();
       boost::filesystem::create_directory(batch_dir);
     }else {
       // Current date-time will be directory name
@@ -306,7 +306,7 @@ main(int argc, char **argv) {
       stringstream date_stream;
       date_stream.imbue(std::locale(date_stream.getloc(), facet));
       date_stream << boost::posix_time::microsec_clock::universal_time();
-      batch_dir = string("./run_output/run_") + date_stream.str();
+      batch_dir = string("./output/run_") + date_stream.str();
       // Create directory
       boost::filesystem::create_directory(batch_dir);
     }
@@ -351,8 +351,8 @@ main(int argc, char **argv) {
     cout << log_reset << "Batch run completed successfully in "
          << (chrono::duration_cast<chrono::milliseconds>(chrono::steady_clock::now() - start).count()) << " ms" << endl;
 
-    ofstream output_filename("most_recent_output_filename.txt");
-    output_filename << xyz_filepath.substr(1);
+    ofstream output_filename("logs/most_recent_output_filename.txt");
+    output_filename << "." << xyz_filepath.substr(1);
     output_filename.close();
 
     // Visuals TODO: remove this terrible cross-application spaghetti mess

@@ -1,0 +1,8 @@
+Df	kf	n	k	e
+2.6	1.13	50	0.7	1
+
+Run	Rg	Actual_Epsilon
+1	128.871	0.00749428
+-----------------
+Average Rg: 128.871
+Average Actual Epsilon: 0.00749428
