@@ -2,3 +2,4 @@ run_output/
 logs/
 build/
 output/run_*/
+output/runs/*
