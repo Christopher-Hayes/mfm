@@ -1,0 +1,13 @@
+Files:
+
+runADDASpheres.py - Run adda trials using the ADDA pre-built sphere shape.
+                  - Input: inputExcelRuns.txt
+                  - Output: outputExcelParsed.txt
+                            
+runBuiltSpheres.py - Run adda trails using the algorithm found in runDipoleSphere.py
+                   - Input: inputExcelRuns.txt
+                   - Output: outputExcelParsed.txt
+
+runDipoleSphere.py - Build an array of XYZ dipoles from a sphere based on dpl and grid size.
+                   - Arguments: python3 runDipoleSphere.py <dpl> <grid>
+                   - Output: outputDipoleXYZ.txt
