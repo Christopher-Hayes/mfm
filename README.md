@@ -2,113 +2,105 @@
 Combination of Modified FracMAP (MFM), ADDA, LibIGL, and some Python code
 
 
-=== COMPILE PREREQUISITES =====================================================
+# COMPILE PREREQUISITES
 
---- nanogui -------------------------------------------------------------------
+## nanogui
 
-- Ubuntu
+### Ubuntu
 
     apt-get install cmake xorg-dev libglu1-mesa-dev python-dev
 
 
-=== COMPILING =================================================================
+# COMPILING
 
---- nanogui -------------------------------------------------------------------
---- ./nanogui/docs/compilation.rst
+## nanogui
 
-- Mac + Linux
+*./nanogui/docs/compilation.rst*
+
+### Mac + Linux
 
     mkdir build; cd build;
     cmake ..
     make -j 4
 
-- Windows
+### Windows
 
     mkdir build; cd build
     cmake -G "Windows Studio 14 2015 Win64" ..
     cmake --build . --config Release
 
 
-=== SOFTWARE DEFINITIONS ======================================================
+# SOFTWARE DEFINITIONS
 
-**nanogui dialog** Window that presents the user with settings for generating a
-                  fractal aggregate. From this dialog the user can hit a button
-                  and the code will generate the fractal. After generating the
-                  fractal aggregate, the 3D model is displayed using LibIGL.
+**nanogui dialog** is the window that presents the user with settings for generating a fractal aggregate. From this dialog the user can hit a button and the code will generate the fractal. After generating the fractal aggregate, the 3D model is displayed using LibIGL.
 
-**LibIGL model**  LibIGL is the software used to generate a 3D model of the
-                  fractal aggregate using the monomer centers. All LibIGL does
-                  is read the fractal data and show a window with each monomer
-                  represented as a 3D sphere.
+**LibIGL model** is the software used to generate a 3D model of the fractal aggregate using the monomer centers. All LibIGL does is read the fractal data and show a window with each monomer represented as a 3D sphere.
 
-**MFM to ADDA**   MFM to ADDA (MFM-2-ADDA) is the code the bridges the gap
-                  between MFM's output and ADDA's input. The output from MFM
-                  must be reformatted and adjusted to work with ADDA. This code
-                  reads that input, accepts relevant parameters, outputs the
-                  formatted data, runs ADDA with that formatted data, then
-                  cherry=picks specific data from ADDA's bulk output in an
-                  additional output file.
+**MFM to ADDA** (MFM-2-ADDA) is the code the bridges the gap between MFM's output and ADDA's input. The output from MFM must be reformatted and adjusted to work with ADDA. This code reads that input, accepts relevant parameters, outputs the formatted data, runs ADDA with that formatted data, then cherry-picks specific data from ADDA's bulk output in an additional output file.
 
-**Modified FracMAP** Modified FracMAP (MFM) is a highly modified version of FracMAP
-                  that essentially takes parameter input through the CLI and
-                  outputs a fractal aggregate with that data. This version of
-                  FracMAP supports monomer overlap.
+**Modified FracMAP** (MFM) is a highly modified version of FracMAP that essentially takes parameter input through the CLI and outputs a fractal aggregate with that data. This version of FracMAP supports monomer overlap.
 
 
-=== PROCEDURES ================================================================
+# PROCEDURES
 
---- Generate fractal aggregate and display 3D model ---------------------------
+## Generate fractal aggregate and display 3D model
 
  1) Show Fractal generator dialog box.
-    nanogui dialog: ./code/nanogui/build/example1
+    
+    *nanogui dialog: ./code/nanogui/build/example1*
 
  2) Generate fractal based on settings provided by user, output saved to File A.
-    MFM: ./code/fracmap/fractal/fracmap
+    
+    *MFM: ./code/fracmap/fractal/fracmap*
 
  3) Display fractal aggregate as LibIGL model using data from File A.
-    LibIGL model: ./code/libigl/tutorial/102_
+    
+    *LibIGL model: ./code/libigl/tutorial/102_DrawMesh_bin*
 
 
---- Use fractal aggregate data to generate ADDA analysis of model -------------
+## Use fractal aggregate data to generate ADDA analysis of model
 
  1) Read fractal aggregate data from File A, format it to be used with ADDA and
     save to File B. MFM-2-ADDA currently has to be run from CLI (no GUI).
-    MFM-2-ADDA: ./mfm_2_adda/
+    
+    *MFM-2-ADDA: ./mfm_2_adda/*
 
  2) Send contents of File B to ADDA with relevant parameters, save ADDA output
     to File C.
-    MFM-2-ADDA: ./mfm_2_adda/
+    
+    *MFM-2-ADDA: ./mfm_2_adda/*
 
  3) Cherry-pick ADDA output data from File C and output to excel-friendly File C.
-    MFM-2-ADDA: ./mfm_2_adda/
+    
+    *MFM-2-ADDA: ./mfm_2_adda/*
 
 
-=== CLI OPERATIONS ============================================================
+# CLI OPERATIONS
 
---- NanoGUI -------------------------------------------------------------------
+## NanoGUI
 
-Run nanogui dialog:
+### Run nanogui dialog
 
-  cd ./nanogui/build/
-  make example1
-  ./example1
-
-
-Edit/Make LibIGL:
-
-  cd code/libigl/build/tutorial/102_DrawMesh
-  vim ../../../tutorial/102_DrawMesh/main.cpp
-  make
+    cd ./nanogui/build/
+    make example1
+    ./example1
 
 
---- MFM-2-ADDA ----------------------------------------------------------------
+### Edit/Make LibIGL
 
-  python3 batchGenDipoles.py input/xyz_run_1.txt
-  python3 batchGenDipoles.py ../fracmap/fractal/run_output/run_<DATETIME_HERE>/xyz_run_1.txt
+    cd code/libigl/build/tutorial/102_DrawMesh
+    vim ../../../tutorial/102_DrawMesh/main.cpp
+    make
 
-  cat output/outputExcelParsed.txt
+
+## MFM-2-ADDA
+
+    python3 batchGenDipoles.py input/xyz_run_1.txt
+    python3 batchGenDipoles.py ../fracmap/fractal/run_output/run_<DATETIME_HERE>/xyz_run_1.txt
+
+    cat output/outputExcelParsed.txt
 
 
---- MFM -----------------------------------------------------------------------
+## MFM
 
-  ./fracmap
+    ./fracmap
