@@ -8,16 +8,43 @@ Combination of Modified FracMAP (MFM), ADDA, LibIGL, and some Python code
 
 ## nanogui
 
-### Ubuntu
+cmake
 
-    apt-get install cmake xorg-dev libglu1-mesa-dev python-dev
+xorg
+
+libglu1
+
+python
+
+## ADDA
+
+FFTW: http://www.fftw.org/
+
+gfortran
+
+## **Ubuntu** Prerequisite Installation
+
+### Dependencies found in APT
+
+    sudo apt-get install cmake xorg-dev libglu1-mesa-dev python-dev gfortran libx11-dev python3-pip
+
+### Separate dependencies
+
+    wget fftw-3.3.8.tar.gz
+    unzip fftw-3.3.8.tar.gz
+    cd fftw-3.3.8.tar.gz
+    ./configure
+    make
+    sudo make install
+
+    pip3 install numpy
 
 
 # COMPILING
 
 ## nanogui
 
-*./nanogui/docs/compilation.rst*
+Library compile documentation: *./nanogui/docs/compilation.rst*
 
 ### Mac + Linux
 
@@ -31,6 +58,34 @@ Combination of Modified FracMAP (MFM), ADDA, LibIGL, and some Python code
     cmake -G "Windows Studio 14 2015 Win64" ..
     cmake --build . --config Release
 
+## adda
+
+### Mac + Linux
+
+    cd code/adda/src
+
+MPI Parallel ADDA:
+
+    make mpi
+
+Sequential ADDA:
+
+    make seq
+
+OpenCL (need to get special libraries for this):
+
+    make ocl
+
+## adda
+
+### Mac + Linux
+
+    cd build
+    git clone https://github.com/libigl/libigl.git
+    cd libigl; mkdir build;
+    cmake ..
+    cd tutorial
+    make
 
 # SOFTWARE DEFINITIONS
 

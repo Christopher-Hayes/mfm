@@ -1,0 +1,26 @@
+#!/bin/bash
+
+linux_install() {
+  echo "Running install scripts for LINUX"
+}
+
+darwin_install() {
+  echo "Running install scripts for DARWIN (OS X)"
+}
+
+windows_install() {
+  echo "Running install scripts for WINDOWS"
+}
+
+if [[ $1 = "linux" ]]; then
+  linux_install
+elif [[ $1 = "darwin" ]]; then
+  darwin_install
+elif [[ $1 = "windows" ]]; then
+  windows_install
+else
+  printf "\nInstall script usage:\n\nLinux:\n./install linux"
+  printf "\n\nDarwin (OS X):\n./install darwin"
+  printf "\n\nWindows:\n./install windows\n\n"
+fi
+
