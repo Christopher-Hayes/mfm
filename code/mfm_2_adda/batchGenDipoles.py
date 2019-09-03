@@ -32,16 +32,17 @@ def write_dipoles(dipoles, filename, new_file=True):
     f.close()
 
 # Run ADDA and grab output as it runs
-def adda_run(monomers, grid='30', dplSize='10', filename='./output/runs/outputDipoleXYZ.txt'):
+def adda_run(monomers, grid='30', dplSize='10', filename='./output/runs/outputDipoleXYZ.txt', lmbda='0.55', mode='seq'):
     dipoles = []
+    print(f'grid: {grid} \tdplSize: {dplSize} \tlmbda: {lmbda} mode: {mode}')
     for m in monomers:
-        print('monomer: {}'.format(m))
+        # print('monomer: {}'.format(m))
         dipoles = list(set(dipoles + buildSphere(dplSize, grid, m[0], m[1], m[2])))
 
     write_dipoles(dipoles, './output/runs/dipole_output_grid' + grid + '_dplsize' + dplSize + '.txt')
 
     # Run ADDA
-    cmdRunADDA = ['adda', '-m', '1.85', '0.71', '-lambda', '0.55', '-shape', 'read', filename, '-dpl', dplSize, '-dir', './output/runs/dipole_output_grid' + grid + '_dplsize' + dplSize]
+    cmdRunADDA = ['code/adda/src/' + mode + '/adda', '-m', '1.85', '0.71', '-lambda', lmbda, '-shape', 'read', filename, '-dpl', dplSize, '-dir', 'output/runs/dipole_output_grid' + grid + '_dplsize' + dplSize]
 
     s1 = ''
     s2 = ''
@@ -144,28 +145,35 @@ def read_fracmap(filename):
 
     return monomer_radius, monomers
 
-# program start
+# usage:            1                  2        3       4       5
+#         <monomer_input_filepath> <dpl_size> <grid> <lambda> <mode>
+#                 string             double     int     int    string
 def main():
     # Read input parameters
-    dplSize, grid = readExcelInput()
+    #dplSize, grid = readExcelInput()
+    dplSize = sys.argv[2]
+    grid = sys.argv[3]
+    lmbda = sys.argv[4]
+    mode = sys.argv[5]
 
     print('dplSize: {}\ngrid: {}'.format(dplSize, grid))
 
     # Read FracMAP input
     monomers = []
     monomer_radius = 0
-    if len(sys.argv) > 1:
-        monomer_radius, monomers = read_fracmap(sys.argv[1])
+    #if len(sys.argv) > 1:
+    monomer_radius, monomers = read_fracmap(sys.argv[1])
 
     # Shift monomers to lose any negative values
     monomers = operate_shift(monomers, monomer_radius)
 
-    # Iterate over run parameters
-    for k in range(len(dplSize)):
-        adda_run(monomers,
-                grid[k],
-                dplSize[k],
-                './output/runs/dipole_output_grid' + str(grid[k]) + '_dplsize' + str(dplSize[k]) + '.txt')
-
+    # Iterate over run parameters - TODO: find way to work this in with new flow
+    #for k in range(len(dplSize)):
+    adda_run(monomers,
+            grid,
+            dplSize,
+            './output/runs/dipole_output_grid' + str(grid) + '_dplsize' + str(dplSize) + '.txt',
+            lmbda,
+            mode)
 
 main()
