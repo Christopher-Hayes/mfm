@@ -34,13 +34,13 @@ def generatePoints(dpl, grid, x_offset, y_offset, z_offset): # , new_file, filen
     r = grid * 0.5 # grid / dpl * 0.5
     center = (r + x_offset, r + y_offset, r + z_offset)
 
-    print('grid:', grid)
-    print('dpl:', dpl)
-    print('r:', r)
-    print('center:', center)
-    print('x-offset:', x_offset)
-    print('y-offset:', y_offset)
-    print('z-offset:', z_offset)
+    #print('grid:', grid)
+    #print('dpl:', dpl)
+    #print('r:', r)
+    #print('center:', center)
+    #print('x-offset:', x_offset)
+    #print('y-offset:', y_offset)
+    #print('z-offset:', z_offset)
     # print('new file:', new_file)
 
     # Open file
@@ -82,17 +82,17 @@ def generatePoints(dpl, grid, x_offset, y_offset, z_offset): # , new_file, filen
     return dipoles
 
 # arguments: { dpl, grid, x-offset, y-offset, z-offset, create-new-file }
-def term():
-    if (len(sys.argv) < 6):
+#def term():
+    #if (len(sys.argv) < 6):
         # generatePoints(float(input("Generate a sphere with what diameter?")), )
         # TODO: prompt for parameters
-        print('TODO...')
-    else:
-        dummy, dpl, grid, x_offset, y_offset, z_offset, create_file = sys.argv
-        print(generatePoints(float(dpl), float(grid), float(x_offset), float(y_offset), float(z_offset)))
+        #print('TODO...')
+    #else:
+    #dummy, dpl, grid, x_offset, y_offset, z_offset, create_file = sys.argv
+    #print(generatePoints(float(dpl), float(grid), float(x_offset), float(y_offset), float(z_offset)))
 
 def buildSphere(dpl, grid, x_offset, y_offset, z_offset):
         return generatePoints(float(dpl), float(grid), float(x_offset), float(y_offset), float(z_offset))
                 # , create_file == 'True', './runs/dipole_output_grid' + grid + '_dplsize' + dpl + '.txt')
 
-term()
+#term()

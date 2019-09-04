@@ -1,5 +1,9 @@
+*.o
+*.pyc
 run_output/
 logs/
 build/
 output/run_*/
 output/runs/dipole_output_*
+ExpCount
+
