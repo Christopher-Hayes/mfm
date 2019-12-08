@@ -1,6 +1,9 @@
 [submodule "nanogui"]
-	path = nanogui
+	path = submodules/nanogui
 	url = https://github.com/wjakob/nanogui
 [submodule "libigl"]
-	path = libigl
+	path = submodules/libigl
 	url = https://github.com/libigl/libigl
+[submodule "adda"]
+	path = submodules/adda
+	url = https://github.com/adda-team/adda

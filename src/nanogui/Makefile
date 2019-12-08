@@ -6,9 +6,9 @@ CXX_FLAGS = -fvisibility=hidden  -Wall -Wextra -std=c++14 -flto=thin -stdlib=lib
 
 CXX_DEFINES = -DCORO_SJLJ -DGLAD_GLAPI_EXPORT -DNANOGUI_PYTHON -DNANOGUI_SHARED -DNVG_SHARED
 
-CXX_INCLUDES = -I../../nanogui/ext/eigen -I../../nanogui/ext/glfw/include -I../../nanogui/ext/nanovg/src -I../../nanogui/include -I../../nanogui/build -I../../nanogui/ext/coro -I../../nanogui/ext/pybind11/include -I/Library/Frameworks/Python.framework/Versions/3.6/include/python3.6m 
+CXX_INCLUDES = -I../../submodules/nanogui/ext/eigen -I../../submodules/nanogui/ext/glfw/include -I../../submodules/nanogui/ext/nanovg/src -I../../submodules/nanogui/include -I../../submodules/nanogui/build -I../../submodules/nanogui/ext/coro -I../../submodules/nanogui/ext/pybind11/include -I/Library/Frameworks/Python.framework/Versions/3.6/include/python3.6m 
 
-FRAMEWORKS = -rpath ../../nanogui/build libnanogui.dylib -framework Cocoa -framework OpenGL -framework CoreVideo -framework IOKit 
+FRAMEWORKS = -rpath ../../submodules/nanogui/build libnanogui.dylib -framework Cocoa -framework OpenGL -framework CoreVideo -framework IOKit 
 
 main:
 	echo "Create object file"

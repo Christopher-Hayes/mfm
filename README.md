@@ -62,7 +62,7 @@ Library compile documentation: *./nanogui/docs/compilation.rst*
 
 ### Mac + Linux
 
-    cd code/adda/src
+    cd adda/src
 
 MPI Parallel ADDA:
 
@@ -76,7 +76,7 @@ OpenCL (need to get special libraries for this):
 
     make ocl
 
-## adda
+## LibIGL
 
 ### Mac + Linux
 
@@ -169,3 +169,18 @@ or
 ### MFM
 
     ./fracmap
+
+# TROUBLESHOOTING
+
+### dyld: Library not loaded
+
+**FIX:** If using Brew, run:
+
+    brew update
+    brew upgrade
+
+### `ld: library not found for -lgfortran` when compiling ADDA
+
+**FIX:** Compile ADDA without fortran using `make seq OPTIONS="NO_FORTRAN"`
+
+

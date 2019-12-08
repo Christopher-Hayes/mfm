@@ -1,16 +1,3 @@
-/*
-    src/example1.cpp -- C++ version of an example application that shows
-    how to use the various widget classes. For a Python implementation, see
-    '../python/example1.py'.
-
-    NanoGUI was developed by Wenzel Jakob <wenzel.jakob@epfl.ch>.
-    The widget drawing code is based on the NanoVG demo application
-    by Mikko Mononen.
-
-    All rights reserved. Use of this source code is governed by a
-    BSD-style license that can be found in the LICENSE.txt file.
-*/
-
 #include <nanogui/opengl.h>
 #include <nanogui/glutil.h>
 #include <nanogui/screen.h>
@@ -34,9 +21,11 @@
 #include <nanogui/colorpicker.h>
 #include <nanogui/graph.h>
 #include <nanogui/tabwidget.h>
+#include <nanogui/nanogui.h>
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <stdlib.h>
 
 #if defined(_WIN32)
 #  pragma warning(pop)
@@ -56,11 +45,11 @@ using std::vector;
 using std::pair;
 using std::to_string;
 
-#include <nanogui/nanogui.h>
-#include <iostream>
-#include <stdlib.h>
-
 using namespace nanogui;
+
+static void fracmapCB();
+static void modelCB();
+static void addaCB();
 
 // Fractal generation variables
 double df = 2.6;	// Fractal dimension
@@ -82,9 +71,9 @@ class MFMGUI : public nanogui::Screen {
   public:
       MFMGUI() : nanogui::Screen(Eigen::Vector2i(1024, 768), "MFM") {
         // WINDOW: FracMAP -------------------------------------------
-        /*Window *windowFracMAP = new Window(this, "FracMAP Options");
+        Window *windowFracMAP = new Window(this, "FracMAP Options");
         windowFracMAP->setPosition(Vector2i(15, 15));
-        windowFracMAP->setLayout(new GroupLayout());*/
+        windowFracMAP->setLayout(new GroupLayout());
 
         // WINDOW: Light Simulation ----------------------------------
         /*Window *windowLight = new Window(this, "Light Simulation Options");
@@ -113,32 +102,57 @@ class MFMGUI : public nanogui::Screen {
         Screen::draw(ctx);
     }
 
-      // Run FracMAP
-      void fracmapCB() {
-        cout << "FRACMAP CALLBACK" << endl;
-      }
-      /*
-      // Run 3D model
-      void modelCB() {
-        cout << "3D MODEL CALLBACK" << endl;
-      }
-      // Run ADDA
-      void addaCB() {
-        cout << "ADDA CALLBACK" << endl;
-      }
-      */
   private:
-      // Members -----------------------------------------------------
+      // --- Members ----------------------------------------------------------
       // FracMAP options
       // Light Simulation options
       // Action Buttons
       Button *runFracMAP, *runModel, *runADDA;
-      // Functions ---------------------------------------------------
-      /*void fracmapCB() const;
-      void modelCB() const;
-      void addaCB() const;*/
+      // --- Functions --------------------------------------------------------
 };
 
+// --- FracMAP ----------------------------------------------------------------
+static void fracmapCB() {
+  // Build fractal aggregate with MFM
+  string command = "code/fracmap/fractal/fracmap ";
+  command += " -d " + to_string(df);
+  command += " -p " + to_string(p);
+  command += " -n " + to_string(n);
+  command += " -k " + to_string(k);
+  command += " -r " + to_string(1);
+  command += " -e " + to_string(e);
+  if (output_dir != "") {
+    command += " -t " + output_dir;
+  }
+  system(command.c_str());
+
+  // Show 3D model
+  int status = system(command.c_str());
+
+  // Get return value (output folder) and send output to ADDA
+  if (status < 0) {
+    std::cout << "Error: " << strerror(errno) << '\n';
+  } else {
+    string filename;
+    std::ifstream read_output_filename("logs/most_recent_output_filename.txt");
+    read_output_filename >> filename;
+    read_output_filename.close();
+
+    std::cout << "MOST RECENT OUTPUT FILENAME = " << filename << std::endl;
+
+    string command = "src/libigl/main " + filename;
+    cout << "COMMAND PATH: " << command << endl;
+    system(command.c_str());
+  }
+}
+// --- Model ------------------------------------------------------------------
+static void modelCB() {
+}
+// --- ADDA -------------------------------------------------------------------
+static void addaCB() {
+}
+
+// --- main -------------------------------------------------------------------
 int main(int /* argc */, char ** /* argv */) {
     try {
         nanogui::init();
